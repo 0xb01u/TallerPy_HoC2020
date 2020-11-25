@@ -11,7 +11,7 @@
 
 \usepackage[pages=some]{background}
 \usepackage{minted}   %comentarios
-\usepackage{caption}    % Para personalizar los títulos de floats
+%\usepackage{caption}    % Para personalizar los títulos de floats
 %\usepackage{todonotes}  % Para añadir anotaciones de tareas pendientes
 %\presetkeys{todonotes}{inline, color=gray!30, size=\footnotesize}{}
 %\usepackage{easyReview} % Para añadir anotaciones de edición
@@ -612,7 +612,7 @@
     \end{itemize}
     \begin{minted}{python}
         lista.pop(3) # [0, 1, 2, 4, 5, 6]; devuelve 3
-        # lista.pop() = lista.pop(0)
+        # lista.pop() = lista.pop(-1)
     \end{minted}
 \end{frame}
 
@@ -1125,12 +1125,14 @@
         from functools import reduce
         
         suma100 = reduce(lambda a, b: a + b, range(100))
+        # 4950
+        # Equivalente a sum(range(100))
     \end{minted}
     \begin{itemize}
         \item Máximo de una lista:
     \end{itemize}
     \begin{minted}{Python}
-        max = reduce(lambda a, b: a if a > b else b, lista)
+        maximo = reduce(lambda a, b: a if a > b else b, lista)
     \end{minted}
 \end{frame}
 
@@ -1255,10 +1257,10 @@ obj.__bool__()
 ... # obj.__tipo__()
 obj.__getattribute__("attr")
 obj.__setattr__("attr", x)
-obj.__len__
 obj.__getitem__(x)
 obj.__setitem__(x, y)
 obj.__call__(x)
+obj.__len__(x)
 obj.__contains__(x)
         \end{minted}
     \end{multicols}
@@ -1356,7 +1358,7 @@ reactions = {(int(e.split(" ")[0]), e.split(" ")[1]):
             \item[--] Computación estadística.
             \item[--] Procesamiento de señales.
         \end{itemize}
-        \item En su \textbf{página web} ofrecen decoumentación y tutoriales para aprender a utilizar el módulo de forma fácil.
+        \item En su \textbf{página web} ofrecen documentación y tutoriales para aprender a utilizar el módulo de forma fácil.
     \end{itemize}
     \vspace{10pt}
     \begin{minted}{Python}
