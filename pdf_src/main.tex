@@ -1,0 +1,1815 @@
+\documentclass[10pt]{beamer} %
+%%%BASICS
+\usepackage[utf8]{inputenc}
+%\usepackage{csquotes}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{textpos}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+
+\usepackage[pages=some]{background}
+\usepackage{minted}   %comentarios
+\usepackage{caption}    % Para personalizar los títulos de floats
+%\usepackage{todonotes}  % Para añadir anotaciones de tareas pendientes
+%\presetkeys{todonotes}{inline, color=gray!30, size=\footnotesize}{}
+%\usepackage{easyReview} % Para añadir anotaciones de edición
+\usepackage{dirtytalk}  % Para entrecomillado
+\usepackage[official]{eurosym}
+\usepackage{ulem}
+\usepackage{hyperref}
+
+%\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+%\usepackage[inline]{enumitem}
+%\usepackage[inline]{enumitem}  % activar para explicar inline
+
+\definecolor{python}{HTML}{FFD43B}
+\definecolor{header}{HTML}{000000}
+
+%%%START THEME SETTINGS
+\usetheme{Rochester}
+\usecolortheme[named=python]{structure}
+\usefonttheme{professionalfonts}
+\setbeamercolor{frametitle}{fg=header}
+%ilysm http://www.cpt.univ-mrs.fr/~masson/latex/Beamer-appearance-cheat-sheet.pdf
+\setbeamercolor{section in toc}{fg=header} 
+\setbeamercolor{title}{fg=header}
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=0.5cm,text margin right=0.5cm}
+%%%END THEME SETTINGS
+
+%\usebackgroundtemplate{\includegraphics[width=.25\textwidth,right]{gui.png}}
+\addtobeamertemplate{headline}{}{%
+\begin{textblock*}{100mm}(.83\textwidth,-1.35cm)
+\includegraphics[height=1.2cm]{gui.png}\vspace{22pt}
+\end{textblock*}}
+
+%%%START APA
+\usepackage{babel}
+%\usepackage[backend=biber,style=apa]{biblatex}
+
+%%%%%%%%%%%%Titulo y autores%%%%%%%%%%%
+\title[Python]{Cómo ser un maestro de Python}
+\institute[]
+ {
+   GUI\\
+   Grupo Universitario de Informática\\
+   Escuela de Ingeniería Informática, Universidad de Valladolid
+ }
+\author[]{Manuel de Castro Caballero \\ Juan Carlos Gil Díaz}
+
+\date[HoC 2020]
+ {Hour of Code, 2020\\
+	25 de Noviembre de 2020}
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+   \begin{multicols}{2}
+     \tableofcontents[currentsection,hideothersubsections]
+   \end{multicols}
+  \end{frame}
+}
+
+\newcommand{\py}{\textsc{Python}}
+
+\begin{document}
+
+\begin{frame}{}
+    \titlepage
+\end{frame}
+
+\section{Introducción e instalación}
+
+\begin{frame}{¿Por qué usar \py?}
+    \begin{itemize}
+        \item ¿Lenguaje de propósito general?
+        \item ¿Multiparadigma?
+        \item ¿Interpretado?
+        \item ¿Débilmente tipado?
+        \item ¿Alta compatibilidad?
+        \item ¿Numerosas herramientas y frameworks?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Por qué uso \py}
+    Programar en \py{} es \textit{fácil}.
+    \begin{itemize}
+        \item[--] Puedes hacer \textbf{muchas} cosas con relativamente \textbf{poco} esfuerzo.
+        \item[--] El intérprete de \textsc{Python} te permite realizar pruebas de partes aisladas de tu código fácilmente.
+        \item[--] El hecho de que sea \textbf{fácil} lo hace \textbf{rápido} a la hora de programar.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Versiones de \py}
+    \begin{itemize}
+        \item \textbf{\py 2: } Descontinuadio desde el 01/01/2020. No recomendado, pero algunos sistemas lo siguen utilizando. Última versión: 2.7.18
+        \item \textbf{\py 3: } Última versión: 3.9.0
+        \begin{itemize}
+            \item[--] \textbf{Nos centraremos en \py 3.}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Instalación}
+\begin{frame}{Instalando \py}
+    \begin{itemize}
+        \item \textbf{\py} - Versión por defecto: \underline{\url{https://www.python.org/downloads/}}
+        \item \textbf{\textsc{Anaconda}} - Versión que incluye múltiples extensiones centradas en la computación científica (pueden instalarse manualmente): \underline{\url{https://www.anaconda.com/products/individual}}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Gestor de paquetes}
+    \begin{itemize}
+        \item \textbf{pip} - Gestor de paquetes por defecto.\\
+        Ejemplo:
+        \begin{minted}{bash}
+        \$ pip install jupyterlab
+        \end{minted}
+        \item \textbf{conda} - Gestor de paquetes de \textsc{Anaconda}.\\
+        Ejemplo:
+        \begin{minted}{bash}
+        \$ conda install -c conda-forge jupyterlab
+        \end{minted}
+    \end{itemize}
+\end{frame}
+
+\subsection{Formas de programar}
+\begin{frame}[fragile]{Programando en \py}
+    \begin{itemize}
+        \item Consola interactiva de \py\footnote{Si no funciona, hay que añadir \py\, a la variable de entorno \textit{path}.\\(Buscar en Google: ``añadir python al path''.)}:
+        \begin{minted}{bash}
+        \$ python
+        \end{minted}
+        Si hay una versión de \py2 previamente instalada:
+        \begin{minted}{bash}
+        \$ python3
+        \end{minted}
+        Adecuada para probar fragmentos aislados de código.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Programando en \py\,(II)}
+    \begin{itemize}
+        \item Programas completos con extensión \texttt{.py}:
+            \begin{itemize}
+                \item[--] \textbf{PyCharm} (personalmente nunca lo he utilizado).
+                \item[--] \textbf{Cualquier editor de texto}: bloc de notas, Vim, \textbf{Sublime Text 3}.
+            \end{itemize}
+            Para ejecutar:
+            \begin{minted}{bash}
+            \$ python(3) ./miPrograma.py
+            \end{minted}
+            \py\, es \textbf{interpretado}: ¡no hay que compilarlo!
+            \begin{itemize}
+                \item[] Para compensarlo, es muy lento. 
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Programando en \py\,(III)}
+    \begin{itemize}
+        \item Utilizando \textbf{jupyter lab} (instalación en la diapositiva 7).\\
+        Utilizado en contextos de computación científica: incluir fragmentos de código en documentos explicativos.\\
+        Abrir con:
+        \begin{minted}{bash}
+        \$ jupyter lab
+        \end{minted}
+    \end{itemize}
+\end{frame}
+
+\section{Python básico}
+
+\begin{frame}{Nuestro primer programa en \py\,(I)}
+    Vamos a programar "Hola, Mundo!" en \py:
+    \begin{itemize}
+        \item ¿Sugerencias?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Nuestro primer programa en \py\,(II)}
+    Vamos a programar "Hola, Mundo!" en \py:
+    \begin{minted}{python}
+    print("Hola, Mundo!")
+    \end{minted}
+\end{frame}
+
+\subsection{Variables y tipos}
+\begin{frame}[fragile]{Variables (I)}
+    \begin{itemize}
+        \item \py\, es \textbf{debilmente tipado}: ``no hay tipos''.
+    \end{itemize}
+    \begin{minted}{python}
+        x = 0
+        print(x)    # Imprime "0"
+        x = 0.0
+        print(x)    # Imprime "0.0"
+        x = "cero"
+        print(x)    # Imprime "cero"
+        x = False
+        print(x)    # Imrpime "False"
+        x = [0, 1, 2, 3]
+        print(x)    # Imrpime "[0, 1, 2, 3]"
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Variables (II)}
+    \begin{itemize}
+        \item Los tipos no son declarados, pero hay tipos intrínsecos. \textbf{Tipado dinámico}.
+    \end{itemize}
+    \begin{minted}{python}
+    "a" + 0 # Error: "TypeError: can only concatenate
+            # str (not "int") to str"
+    \end{minted}
+    \begin{itemize}
+        \item Para averiguar el tipo de una variable: función \texttt{type()}
+    \end{itemize}
+    \begin{minted}{python}
+        type(0)   # "<class 'int'>"
+        type(0.0) # "<class 'float'>"
+        type("a") # "<class 'str'>"
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Variables (III)}
+    \begin{itemize}
+        \item Para \textit{castear} variables a tipos predefinidos:
+    \end{itemize}
+    \begin{minted}{python}
+    int("0")   # Devuelve 0 de tipo int
+    int(0.9)   # Devuelve 0 de tipo int
+    float(0)   # Devuelve 0.0 de tipo float
+    float("0") # Devuelve 0.0 de tipo float
+    str(0)     # Devuelve "0" de tipo str
+    ord("A")   # Devuelve 65 de tipo int
+               # (casteo de caracteres a enteros)
+    chr(65)    # Devuelve "A" de tipo str
+               # (casteo de enteros a caracteres)
+    bool(2)    # Devuelve True de tipo bool
+    bool(0.0)  # Devuelve False de tipo bool
+               # (todo valor distinto de 0 es True)
+    
+    "a" + str(0) # = "a0"
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Variables (IV)}
+    \begin{itemize}
+        \item Las variables \textbf{no tienen limitaciones de rango}.
+        \item No hay diferencias entre:
+        \begin{itemize}
+            \item[--] short/int/long: Solo el tipo entero (int)
+            \item[--] float/double: Solo el tipo real (float)
+            \item[--] char/str: Solo el tipo str.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Algunos operadores}
+    \begin{itemize}
+        \item \textit{AND} lógico, \textit{OR} lógico y \textit{NOT} lógico:
+    \end{itemize}
+    \begin{minted}{python}
+        True and False # False
+        True or False  # True
+        not False      # True
+    \end{minted}
+    \begin{itemize}
+        \item Operadores de bit (\textit{AND}, \textit{OR}, \textit{XOR}, \textit{NOT}):
+        
+    \end{itemize}
+    \begin{minted}{python}
+        1 & 2   # 0
+        1 | 2   # 3
+        1 ^ 3   # 2
+        ~1      # -2
+        
+        # Extensiones por casteos implícitos:
+        True ^ False   # True
+        ~True          # -2
+        ~False         # -1
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Algunos operadores (II)}
+    \begin{itemize}
+        \item Exponenciación:
+    \end{itemize}
+    \begin{minted}{Python}
+        2**10   # 1024
+    \end{minted}
+    \begin{itemize}
+        \item Multiplicación de elementos que no son números:
+    \end{itemize}
+    \begin{minted}{Python}
+        "a" * 3         # "aaa"
+        [0, 1, 2] * 3   # [0, 1, 2, 0, 1, 2, 0, 1, 2]
+    \end{minted}
+\end{frame}
+
+\subsection{Estructuras de control de flujo}
+\begin{frame}{Indentación}
+    \textbf{IMPORTANTE: indentar el código} que va dentro de una estructura de control o función.
+    \begin{itemize}
+        \item Valen espacios o tabuladores, pero las líneas de código incluidas en el mismo ``bloque'' deben estar a la misma altura.
+    \end{itemize}\par
+    \py\, no utiliza corchetes para crear bloques de código, como sí ocurre ne \textsc{C} o \textsc{Java}.
+\end{frame}
+
+\begin{frame}[fragile]{Estructuras de control de flujo}
+    \begin{itemize}
+        \item \textbf{if}, \textbf{else} y \textbf{elif}
+    \end{itemize}
+    \begin{minted}{python}
+        if condition:
+            # Consecuencia
+        elif condition2:
+            # Alternativa 1
+        elif condition3:
+            # Alternativa 2
+        else:
+            # Alternativa a todas las alternativas
+        # Código que se ejecuta después del if/elif/else.
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{No hay switch}, se debe implementar de forma alternativa (secuencia de elifs).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Estructuras de control de flujo (II)}
+    \begin{itemize}
+        \item \textbf{while}:
+    \end{itemize}
+    \begin{minted}{python}
+        while condition:
+            # Bucle
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{No hay do-whiles}.
+        \item \textbf{for}: Estructura de control un poco particular. No existen de la forma usual, al estilo de \textsc{Java} o \textsc{C}. Solo existen del tipo \textbf{for-each} (en el taller avanzado se explicará con más detalle). Lo más parecido a un \texttt{for} normal es:
+    \end{itemize}
+    \begin{minted}{python}
+        for i in range(n):
+            # Bucle que se repetirá n veces
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Palabras especiales} para bucles:
+    \end{itemize}
+    \begin{minted}{Python}
+        break       # Finaliza prematuramente el bucle
+        continue    # Pasa a la siguiente iteración
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Uso de range()}
+    \begin{minted}{python}
+    range(primero, ultimo + 1, salto_entre_valores)
+    \end{minted}
+    \begin{itemize}
+        \item Por ejemplo, equivalencias con \textsc{Java}/\textsc{C}:
+    \end{itemize}
+    \begin{minted}{python}
+        range(n) = range(0, n) = range(0, n, 1)
+        (int i = 0; i < n; i++)
+    
+        range(2, 10, 3)
+        (int i = 2; i < 10; i += 3)
+        
+        range(10, 0, -2)
+        (int i = 10; i > 0; i -= 2)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Estructuras de control de errores}
+    \begin{itemize}
+        \item \textbf{try-except}:
+    \end{itemize}
+    \begin{minted}{python}
+        try:
+            # Código en el que esperamos un error.
+        except NameError:
+            # Se ejecuta si se detecta una NameError.
+            print("Ha ocurrido un NameError!")
+        except IndexError as e:
+            # Se ejecuta si se detecta un IndexError.
+            print("Ha ocurrido el siguiente error " + e)
+        except:
+            # Se ejecuta si se detecta cualquier otro error.
+        else:
+            # Se ejecuta si no se detecta ningún error.
+            print("No ha habido errores :D")
+        finally:
+            # Se ejecuta al final, en cualquier caso.
+            print("Ya no se esperan más errores.")
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Otras utilidades}
+    \begin{itemize}
+        \item Lanzar errores:
+    \end{itemize}
+    \begin{minted}{python}
+        raise Exception("Soy un error salvaje.")
+    \end{minted}
+    \begin{itemize}
+        \item Palabra reservada \textbf{pass}: No hace nada (literalmente).
+    \end{itemize}
+    \begin{minted}{python}
+        for i in range(n):
+            try:
+                # Código en el que puede haber errores.
+            except:
+                pass # Pasamos de ejecutar si hay un error,
+                     # continuamos en la siguiente iteración.
+    \end{minted}
+\end{frame}
+
+\subsection{Funciones}
+\begin{frame}[fragile]{Funciones}
+    \begin{itemize}
+        \item \textbf{Métodos}:
+    \end{itemize}
+    \begin{minted}{python}
+        def imprimir_hasta(n):
+            for i in range(n):
+                print(n)
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Funciones}:
+    \end{itemize}
+    \begin{minted}{python}
+        def factorial(n):
+            if (n == 0):
+                return 1
+            return n * factorial(n - 1)
+        
+        def varios_valores():
+            return 1, 2
+        
+        x = varios_valores()    # x = (1, 2)
+        x, y = varios_valores() # x = 1, y = 2
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Funciones: orden}
+    \begin{itemize}
+        \item \textbf{IMPORTANTE}: \py\,es \textbf{interpretado}.
+        \begin{itemize}
+            \item[--] El interprete va leyendo el fichero \textbf{línea a línea} y ejecutándolas según las lee.
+        \end{itemize}
+        \item \textbf{Solo se puede llamar a funciones que se han definido anteriormente}, ya que ``no existen'' en el programa hasta que no se definen.
+    \end{itemize}
+\end{frame}
+
+\subsection{Otras utilidades básicas}
+\begin{frame}[fragile]{Entrada/salida}
+    \begin{itemize}
+        \item Lectura de datos
+    \end{itemize}
+    \begin{minted}{python}
+        entrada = input("Introduzca un número: ") # Devuelve
+                                                  # una string
+        n = int(entrada)
+    \end{minted}
+    \begin{itemize}
+        \item Impresión por consola:
+    \end{itemize}
+    \begin{minted}{python}
+        print("Has introducido " + str(n))
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Comentarios}
+    \begin{itemize}
+        \item De una linea:
+    \end{itemize}
+    \begin{minted}{python}
+        # Soy un comentario.
+    \end{minted}
+    \begin{itemize}
+        \item Multilinea:
+    \end{itemize}
+    \begin{minted}{python}
+        '''Soy un comentario
+        de varias
+        líneas.'''
+    \end{minted}
+\end{frame}
+
+\subsection{Contenedores básicos}
+\begin{frame}[fragile]{\sout{ Arrays } Listas}
+    \begin{itemize}
+        \item \py\, no tiene arrays, tiene \textbf{listas}.
+        \item Las listas se diferencian de los arrays:
+        \begin{itemize}
+            \item Tienen \textbf{tamaño variable}: crecen y decrecen.
+            \item Pueden almacenar \textbf{elementos de distinto tipo}.
+        \end{itemize}
+    \end{itemize}
+    \begin{minted}{python}
+        lista = [] # Lista vacía
+        lista = [1, 2, 3]
+        lista = [0, 1.0, True, "3", [4, 5, 6]]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con listas (I)}
+    \begin{minted}{python}
+        lista = [0, 1, 2]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Acceder} a un elemento (por índice):
+    \end{itemize}
+    \begin{minted}{python}
+        lista[0]  # 0
+        lista[-1] # 2; los índices negativos se traducen como:
+                  # "tamaño de la lista + (número indicado)"
+                  
+        # En general, se accede al índice
+        # ((len(lista) + índice) % len(lista))-ésimo,
+        # con -len(lisa) <= indice < len(lista)
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Añadir} elemento al final:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.append(3) # [0, 1, 2, 3]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Tamaño} de la lista:
+    \end{itemize}
+    \begin{minted}{python}
+        len(lista) # 3
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Eliminar} un elemento por índice:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.remove(1) # [0, 2]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con listas (II)}
+    \begin{minted}{python}
+        lista = [0, 1, 2, 0, 1, 2]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Índice} de un elemento:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.index(0)      # 0
+        lista.index(0, 1)   # 3
+        lista.index(3)      # ¡ERROR!
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Comprobar} si existe un elemento:
+    \end{itemize}
+    \begin{minted}{python}
+        3 in lista          # False
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Contar} elementos:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.count(0)      # 2
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Añadir} elemento en un índice:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.insert(3, 3)  # [0, 1, 2, 3, 0, 1, 2]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con listas (III)}
+    \begin{minted}{python}
+        lista = [0, 1, 2, 3, 4, 5, 6]
+    \end{minted}
+    \begin{itemize}
+        \item Acceder a una \textbf{sublista} (acceso por \textit{slices}):
+    \end{itemize}
+    \begin{minted}{python}
+        lista[1:3]    # [1, 2]
+        lista[0:-1:2] # [0, 2, 4]
+        lista[::-1]   # [6, 5, 4, 3, 2, 1, 0]
+        # lista[primero:ultimo+1:salto_entre_valores]
+        # lista[::] = lista[0:len(lista):1]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Copiar} lista:
+    \end{itemize}
+    \begin{minted}{python}
+        lista2 = lista[:]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Extender} con otra lista:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.extend([7, 8, 9]) # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Eliminar y devolver} elemento por índice:
+    \end{itemize}
+    \begin{minted}{python}
+        lista.pop(3) # [0, 1, 2, 4, 5, 6]; devuelve 3
+        # lista.pop() = lista.pop(0)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Tuplas}
+    Como las listas, pero \textbf{inmutables}: de solo lectura.
+    \begin{itemize}
+        \item Una vez construidas, no se puden editar.
+    \end{itemize}
+    \begin{minted}{python}
+        tupla = (1, 2, 3)
+    \end{minted}
+    \begin{itemize}
+        \item Operaciones: \texttt{.count()} y \texttt{.index()} solamente.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Diccionarios}
+    \begin{itemize}
+        \item Los \textbf{diccionarios} son parecidas a las listas, pero en vez de almacenar elementos, se almacenan \textbf{pares clave-valor}:
+    \end{itemize}
+    \begin{minted}{python}
+        diccionario = {}    # Diccionario vacío
+    \end{minted}
+    \begin{itemize}
+        \item Las claves y los valores pueden ser de cualquier tipo:
+    \end{itemize}
+    \begin{minted}{python}
+        diccionario= {"clave": "valor", 0: False,
+                        2.0: [0, 1]}
+    \end{minted}
+    \begin{itemize}
+        \item Los valores se \textbf{acceden por su clave}:
+    \end{itemize}
+    \begin{minted}{python}
+        diccionario["clave"]   # Devuelve "valor"
+        diccionario[2.0] = 5
+        # diccionario ahora es:
+        # {"clave": "valor", 0: False, 2.0: 5}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Diccionarios II}
+    \begin{minted}{python}
+    diccionario = { 0: "lunes", 1: "martes", 2: "miercoles" }
+    \end{minted}
+    \begin{itemize}
+        \item Obtener \textbf{todas las claves}:
+    \end{itemize}
+    \begin{minted}{python}
+        diccionario.keys()  # [0, 1, 2]
+    \end{minted}
+    \begin{itemize}
+        \item Obtener \textbf{todos los valores}:
+    \end{itemize}
+    \begin{minted}{python}
+        diccionario.values()  # ['lunes', 'martes', 'miercoles']
+    \end{minted}
+    \begin{itemize}
+        \item Obtener \textbf{todos los pares clave-valor} (como tuplas):
+    \end{itemize}
+    \begin{minted}{python}
+        diccionario.items() # [(0, 'lunes'), (1, 'martes'),
+                            # (2, 'miercoles')]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Eliminar} un par clave-valor:
+    \end{itemize}
+    \begin{minted}{python}
+        del diccionario[0]  # {1: 'martes', 2: 'miercoles'}
+    \end{minted}
+\end{frame}
+
+\subsection{Ficheros}
+\begin{frame}[fragile]{Lectura y escritura de ficheros}
+    \begin{minted}{Python}
+    in_ = open("entrada.txt", "r")  # Apertura para lectura
+    out = open("salida.txt", "w")   # Apertura para escritura
+    
+    ap = open("añadir.txt", "a")    # Apertura para escritura,
+                                    # escribiendo debajo de lo
+                                    # que ya haya
+                                    
+    io = open("lec_y_esc.txt", "r+")# Apertura para lectura y
+                                    # escritura
+
+    fichero.close() # Cierre del fichero (tras usarlo)
+    
+    \end{minted}
+    Los modos \texttt{"rb", "wb", "ab", "rb+"} se utilizan para trabajar con ficheros \textbf{binarios} en vez de textuales.
+\end{frame}
+
+\begin{frame}[fragile]{Funciones de lectura y escritura}
+    \begin{itemize}
+        \item \textbf{Lectura} de \textbf{todo} un fichero en una string:
+    \end{itemize}
+    \begin{minted}{Python}
+        texto = fichero.read()
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Lectura} de \textbf{las líneas} de un fichero en una lista de strings:
+    \end{itemize}
+    \begin{minted}{Python}
+        lista_lineas = fichero.readlines()
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Escritura} de una string a un fichero:
+    \end{itemize}
+    \begin{minted}{Python}
+        fichero.write(string)
+    \end{minted}
+\end{frame}
+
+\subsection{Módulos}
+\begin{frame}[fragile]{Importar módulos}
+    Los módulos añaden funcionalidades a nuestros programas. Python cuenta con una gran cantidad de módulos de mucha utilidad, ayudándonos a programar de forma más concisa.
+    \begin{minted}{Python}
+        import modulo
+        modulo.funcion()
+        
+        import modulo as m
+        m.funcion()
+        
+        from modulo import funcion
+        funcion()
+        
+        from modulo import funcion as f
+        f()
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Ejercicios}
+    \begin{enumerate}
+        \item Construir una función que, dado un entero \texttt{n}, devuelva la \textbf{matriz identidad} de \texttt{nxn} dimensiones.
+        \item Construir una función a la que se le pase un tipo de datos y una lista y devuelva \textbf{otra} lista con los \textbf{elementos del tipo especificado} de la primera lista.
+        \begin{itemize}
+            \item[--] \texttt{funcion(int, [0, 1.5, True, "string"])} debe devolver \texttt{[0]}
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Ejercicios (II)}
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item Construir un programa que pida en bucle números al usuario, los almacene en una lista, e imprima por pantalla la \textbf{media}, la \textbf{moda} y la \textbf{desviación típica} del conjunto de números introducido.
+        \begin{itemize}
+            \item[--] \underline{Media}: suma de todos los números entre el número total de números.
+            \item[] \underline{Moda}: el número que más se haya repetido (en caso de empate, devolver cualquiera)
+            \item[] \underline{Desviación típica}: la raíz cuadrada de la suma de \\ \texttt{(numero\_i - media)**2 / total\_numeros}
+            \item[--] El bucle puede terminar cuando se introduzca cierto valor especial (0, o algún número negativo), o cuando no se introduzca ningún número, con un \texttt{try-except}.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Ejercicios (III)}
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \item Realizar un programa que modele el login de una página web utilizando un \textbf{diccionario}:
+        \begin{itemize}
+            \item[--] El programa pedirá en bucle nombres al usuario.
+            \item[--] Si el nombre introducido no está registrado, pedirá una contraseña y lo registrará en el sistema (diccionario).
+            \item[--] Si el nombre introducido está registrado, mostrará su contraseña.
+            \begin{itemize}
+                \item[x] Otra opción es pedir la contraseña y comprobar que es correcta.
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\section{Python avanzado}
+
+\begin{frame}[fragile]{Trucos breves}
+    \begin{itemize}
+        \item Strings con \textbf{formato}:
+    \end{itemize}
+    \begin{minted}{Python}
+        x = 5
+        print(f"Valor de x: {x}")   # "Valor de x: 5"
+    \end{minted}
+    \begin{itemize}
+        \item Funciones de \textbf{tratamiento de strings}
+    \end{itemize}
+    \begin{minted}{Python}
+        "a b c d".split(" ")        # ["a", "b", "c", "d"]
+        "a,b,c,d".replace(",", " ") # "a b c d"   
+    \end{minted}
+    \begin{itemize}
+        \item Operador \textbf{ternario}:
+    \end{itemize}
+    \begin{minted}{Python}
+        max = a if a > b else b
+    \end{minted}
+    \begin{itemize}
+        \item \py\, tiene un tipo nativo para los \textbf{números complejos}:
+    \end{itemize}
+    \begin{minted}{Python}
+        type(1j)        # "<class 'complex'>"
+        print(1j**2)    # (-1+0j)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Trucos breves (II)}
+    \begin{itemize}
+        \item Un diccionario sin valores es un \textbf{conjunto} (\texttt{set}):
+        \begin{itemize}
+            \item[--] Cada elemento solo se incluye una vez.
+        \end{itemize}
+    \end{itemize}
+    \begin{minted}{Python}
+        type({1, 2, 3}) # <class 'set'>
+    \end{minted}
+    \begin{itemize}
+        \item[]
+        \begin{itemize}
+            \item[--] Los conjuntos tienen definidas ciertas operaciones propias, como la unión, la intersección, la diferencia, la comprobación de subconjunto/superconjunto...
+        \end{itemize}
+        \item Para acceder a los \textbf{argumentos} que se le pasen al programa:
+    \end{itemize}
+    \begin{minted}{Python}
+        from sys import argv
+        
+        argv[0]     # Nombre del programa en ejecución
+        len(argv)   # Número de argumentos pasados al programa
+                    # (contando el nombre)
+    \end{minted}
+    \begin{itemize}
+        \item Para ejecutar \textbf{comandos} arbitrarios en terminal:
+    \end{itemize}
+    \begin{minted}{Python}
+        from os import system
+        
+        system("clear")
+    \end{minted}
+\end{frame}
+
+\subsection{Iterables y generadores}
+
+\begin{frame}[fragile]{For-each}
+    \begin{itemize}
+        \item Los \textbf{for} en \py\, recorren \textbf{iterables}.
+        \begin{itemize}
+            \item[--] Un iterable es una estructura formada por varios elementos, sobre los que se puede iterar: listas, tuplas, diccionarios...
+        \end{itemize}
+        \item Cada iteración, se toma el valor de uno de los elementos del iterable.
+    \end{itemize}
+    \begin{minted}{python}
+        for e in [0, 1, 2, 3]:
+            print(e)
+        # Imprime en distintas líneas: 0, 1, 2, 3
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{For-each (II)}
+    \begin{minted}{python}
+    for e in {0: "a", 1: "b", 2: "c"}:
+        print(e)
+    # Imprime en distintas líneas: 0, 1, 2
+    # (¡Se itera sobre las claves!)
+    
+    for e in "Bienvenidos a la Hora del Codigo :D".split(" "):
+        print(e)
+    # Imprime:
+    #  Bienvenidos
+    #  a
+    #  la
+    #  Hora
+    #  del
+    #  Codigo
+    #  :D
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Comprensiones de listas}
+    Las compresiones de listas presentan una forma concisa de crear listas:
+    \begin{minted}{Python}
+        l = []
+        for i in range(100):
+            if (i * i) % 2 == 0:
+                l.append(i * i)
+        
+        # Equivale a:
+        l = [i * i for i in range(100) if (i * i) % 2 == 0]
+    \end{minted}
+    ¡Puedes crear listas en una sola expresión (y por tanto en una sola línea)!
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplos de comprensiones de listas}
+    \begin{minted}{Python}
+    [7 * i for i in range(10)]  # La tabla del 7
+    
+    [e for e in l1 if e in l2]  # Intersección de dos listas
+                                # (l1 y l2)
+                                
+    [print(e) for e in lista]   # Imprimir todos los
+                                # elementos de una lista
+                                
+    M = [[0] * 10 for i in range(10)]   # Creación de una
+                                        # matriz 10x10
+                                    
+   [e for fila in [[0, 1], [2, 3]] for e in fila]
+   # Comprensión de lista de doble bucle:
+   # ¡"Aplana" la matriz!: [0, 1, 2, 3]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo grande de comprensiones de listas}
+    \begin{minted}{Python}
+[k for i in [[range(3*x + y, 3*(x + 1) + y) for x in range(3)]
+    for y in range(0, 27, 9)] for j in i for k in j]
+# 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 26
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Comprensiones de diccionarios}
+    Las comprensiones también tienen su versión para diccionarios:
+    \begin{minted}{Python}
+{chr(e + ord('A')): e for e in range(ord('Z') - ord('A') + 1)}
+#  {'A': 0, 'B': 1, 'C': 2, ..., 'Z': 25}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Generadores}
+    Podemos entender los generadores como comprensiones de listas ``de un solo uso'': Solo se puede iterar una vez sobre ellos.
+    \begin{minted}{Python}
+        gen = (x**2 for x in range(10))
+        print(generador) # <generator object gen at 0x...>
+        [print(e) for e in gen] # 0, 1, 4, 9, ..., 81
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{yield}
+    \texttt{yield} es una palabra reservada utilizada como \texttt{return}, para crear generadores:
+    \begin{minted}{Python}
+        def mi_generador():
+            yield 1
+            yield 2
+            yield 3
+        
+        [print(i) for i in mi_generador()]   # 1, 2, 3
+    \end{minted}
+    Cada vez que se llame a la función, se ejecutará hasta el siguiente \texttt{yield} que se encuentre. Esto ocurrirá hasta que el generador se considere vacío: cuando la función termina su ejecución sin llegar a ningún \texttt{yield}.
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo de yield}
+    \begin{minted}{Python}
+        def celdas_contiguas(x, y):
+            for i in range(-1, 2):
+                for j in range(-1, 2):
+                    if not (i == 0 and j == 0):
+                        yield (x + i, y + j)
+        
+        [print(e) for e in celdas_contiguas(1, 1)]
+        # (0, 0)
+        # (0, 1)
+        # (0, 2)
+        # (1, 0)
+        # (1, 2)
+        # (2, 0)
+        # (2, 1)
+        # (2, 2)
+    \end{minted}
+\end{frame}
+
+\subsection{Funciones}
+
+\begin{frame}[fragile]{Expansión de argumentos}
+    En una llamada a una función, se puede \textbf{expandir} un iterable a sus elementos, para pasarlos como argumentos, utilizando el caracter \texttt{*}:
+    \begin{minted}{Python}
+        def imprimirPunto(x, y, z):
+            print(f"Las coordenadas del punto son: {x}, {y}, {z}")
+        
+        punto = (1, 2, 3)
+        imprimirPunto(*punto)
+        # "Las coordenadas del punto son: 1, 2, 3"
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Argumentos con valores por defecto}
+    Puedes asignar un \textbf{valor por defecto a cada argumentos} de una función en \py, siguiendo su declaración de un \texttt{=} y el valor por defecto:
+    \begin{minted}{Python}
+        from math import sqrt
+    
+        def ecuacionSegundoGrado(a=1, b=0, c=0):
+            return (-b + sqrt(b**2 - 4 * a * c)) / (2 * a)
+        
+        print(ecuacionSegundoGrado())           # 0.0
+        print(ecuacionSegundoGrado(2, 2))       # 0.0
+        print(ecuacionSegundoGrado(1, 2, 1))    # -1.0
+    \end{minted}
+    Se puede cambiar el valor de solo algunos de los argumentos por defecto, indicando cuáles en la llamada a la función:
+    \begin{minted}{Python}
+        print(ecuacionSegundoGrado(c=-1))       # 1.0
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Otro ejemplo de argumentos por defecto}
+    Los argumentos por defecto tienen que declararse \textbf{después} de los argumentos sin valores por defecto.
+    \begin{minted}{Python}
+    def ecuacionSegundoGrado(c, b=0, a=1, dos_resultados=False):
+        if dos_resultados:
+            return (-b + sqrt(b**2 - 4 * a * c)) / (2 * a),
+                (-b - sqrt(b**2 - 4 * a * c)) / (2 * a)
+        else:
+            return (-b + sqrt(b**2 - 4 * a * c)) / (2 * a)
+            
+    ecuacionSegundoGrado(-1, dos_resultados=True, a=2)
+    # (0.7071067811865476, -0.7071067811865476)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Argumentos variables}
+    Puedes crear funciones que tomen un \textbf{número de argumentos variable}.
+    \begin{itemize}
+        \item[--] No confundir con argumentos por defecto: los argumentos variables \textbf{no toman un valor por defecto}.
+    \end{itemize}
+    Los argumentos por defecto se guardan en una lista (parámetro) declarada con un \texttt{*} delante (\texttt{*args} por convención):
+    \begin{minted}{Python}
+        def multiplicar(a, b, *args):
+            f = a * b
+            for e in args:
+                f *= e
+            return f
+
+        print(multiplicar(2, 3, 4, 5, 6))   # 720
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Argumentos variables (II)}
+    Existe una forma de capturar argumentos variables que tengan una \textbf{clave}: utilizando \texttt{**}. El nombre del parámetro suele ser \texttt{**kwargs}, un diccionario:
+    \begin{minted}{Python}
+        def ejemplo_kwargs(**kwargs):
+            [print(k, v) for k, v in kwargs.items()]
+        
+        ejemplo_kwargs(clave="valor", a=True, b=1)
+        # clave valor
+        # a True
+        # b 1
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Funciones lambda}
+    \begin{itemize} 
+        \item Las \textbf{funciones lambda} son funciones anónimas cuya definición es una única expresión. Devuelven el valor de dicha expresión (evaluando sus parámetros).
+        \item Se pueden usar en cualquier lugar en que se puede usar una expresión (asignación a una variable, argumento a otra función...).
+        \item Su forma es:
+    \end{itemize}
+    \begin{minted}{Python}
+        lambda argumentos: expresion
+    \end{minted}
+    \begin{itemize}
+        \item Ejemplo:
+    \end{itemize}
+    \begin{minted}{Python}
+        multiplicar = lambda x, y: x*y
+        
+        print(multiplicar(2, 5))   # 10
+    \end{minted}
+\end{frame}
+
+\subsection{Funciones de utilidad}
+
+\begin{frame}[fragile]{map()}
+    \texttt{map()} es una función que toma como argumentos una función de un argumento y un iterable y devuelve un objeto map (un iterador), cuyos elementos son el resultado de \textbf{aplicar la función a todos los elementos} del iterable:
+    \begin{itemize}
+        \item Lista de los 10 primeros cuadrados:
+    \end{itemize}
+    \begin{minted}{Python}
+        list(map(lambda x: x**2, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))
+        # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+    \end{minted}
+    \begin{itemize}
+        \item Transformar un csv con números enteros a una matriz:
+    \end{itemize}
+    \begin{minted}{Python}
+        csv = [list(map(int, line.split(",")))
+            for line in open("datos.csv").readlines()]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Más ejemplos de map()}
+    \begin{itemize}
+        \item Encadenar \texttt{maps}:
+    \end{itemize}
+    \begin{minted}{Python}
+        from math import sqrt
+        
+        map(sqrt, map(abs, listaNumeros))
+    \end{minted}
+    \begin{itemize}
+        \item Mapa sobre una \textbf{matriz}:
+    \end{itemize}
+    \begin{minted}{Python}
+        map(lambda l: map(sqrt, l), listaNumeros)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{zip()}
+\texttt{zip()} es una función que toma 0 o más iterables por argumentos y devuelve un objeto zip (un iterador) cuyos elementos son tuplas conteniendo los elementos de sus argumentos.
+\begin{minted}{Python}
+    list(zip(range(3), range(0, 6, 2), range(100)))
+    # [(0, 0, 0), (1, 2, 1), (2, 4, 2)]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{reduce()}
+    \texttt{reduce()} es una función del módulo \texttt{functools}, que toma como argumentos una función de dos argumentos y un iterable, y devuelve el \textbf{valor} de aplicar dicha función a todos los elementos del iterable, en secuencia.
+    \begin{itemize}
+        \item Suma de los 100 primeros números:
+    \end{itemize}
+    \begin{minted}{Python}
+        from functools import reduce
+        
+        suma100 = reduce(lambda a, b: a + b, range(100))
+    \end{minted}
+    \begin{itemize}
+        \item Máximo de una lista:
+    \end{itemize}
+    \begin{minted}{Python}
+        max = reduce(lambda a, b: a if a > b else b, lista)
+    \end{minted}
+\end{frame}
+
+\subsection{Introducción a objetos}
+
+\begin{frame}[fragile]{Objetos}
+    La forma general de un objeto en Python es:
+    \begin{multicols}{2}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+class Persona:
+    nombre = ""
+    
+    # Constructor
+    def __init__(self, nombre, dni):
+        self.nombre = nombre
+        self.dni = dni
+    
+    def saludo(self):
+        return "Buenos dias"
+    
+    @staticmethod
+    def sumar2y2():
+        return 4
+
+
+
+alice = Persona("Alice", "00000001R")
+
+print(alice.saludo())      # Buenos días
+print(alice.sumar2y2())    # 4
+print(Persona.sumar2y2())  # 4
+
+        \end{minted}
+    \columnbreak
+        \begin{minted}[fontsize=\scriptsize]{Python}
+# Herencia:
+class Informatico(Persona):
+    # Constructor
+    def __init__(self, nombre, username, dni):
+        Persona.__init__(self, nombre, dni)
+        #super().__init__(self, nombre, dni)
+        self.usr = username
+
+    def saludo(self):
+        return "Hello, world!"
+
+
+
+
+
+
+
+bob = Informatico("Bob", "xX_BobG4m3r_Xx",
+    "00000007F")
+print(bob.saludo())        # Hello, world!
+print(bob.sumar2y2())      # 4
+        \end{minted}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Conceptos clave de los objetos}
+    \begin{itemize}
+        \item \texttt{self} se usa (por convención) para referenciar a la \textbf{instancia concreta} sobre la que se ejecutan funciones o accede a atributos. Es el \textbf{primer parámetro} de todas las funciones.
+        \begin{itemize}
+            \item[--] Salvo en casos especiales, \textbf{el valor de \texttt{self} se omite de las llamadas a funciones}.
+        \end{itemize}
+        \item \texttt{\_\_init\_\_()} es el constructor de objetos.
+        \item Los atributos se pueden definir dentro de la clase, pero no hace falta. Se pueden añadir ``sobre la marcha'' dentro de las funciones de clase (incluyendo el constructor).
+        \item Los métodos estáticos se \textbf{decoran} con \texttt{@staticmethod}.
+        \item Puedes \textbf{privatizar} miembros haciendo que empiecen por \texttt{\_\_}.
+        \begin{itemize}
+            \item[--] No es una privatización real. Se sigue pudiendo acceder a cualquier miembro privado: \texttt{obj.\_Clase\_\_miembro} (a esto se le llama \textit{name mangling}).
+            \item[--] Por ejemplo, para acceder al metodo privado \texttt{\_\_privado()} definido en \texttt{Persona} de la instancia \texttt{bob}: \texttt{bob.\_Persona\_\_privado()}
+            \item[--] Los miembros privados \textbf{no se heredan}.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Definiendo operaciones sobre objetos}
+    \begin{itemize}
+        \item Los operadores de \py, al igual que ciertas funciones estándar, llaman a ciertas \textbf{funciones específicas de los objetos} para realizar sus operaciones.\par
+        \item Al igual que en \textsc{Java} puedes definir \texttt{.equals()} o \texttt{.compareTo()} para definir ciertas operaciones básicas sobre los objetos, en \py, se puede hacer lo mismo.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Mapa básico de operadores}
+    \begin{multicols}{2}[Referencia:
+    \underline{\url{https://docs.python.org/3/reference/datamodel.html}}] \hspace{47pt} El operador:
+        \begin{minted}[fontsize=\footnotesize]{Python}
+            obj = Clase()
+            obj1 < obj2
+            obj1 <= obj2
+            obj1 == obj2
+            obj1 != obj2
+            obj1 > obj2
+            obj1 >= obj2
+            hash(obj)
+            str(obj)
+            bool(obj)
+            ... # Más casteos
+            obj.attr
+            obj.attr = x
+            obj[x]
+            obj[x] = y
+            obj(x)
+            len(obj)
+            x in obj
+        \end{minted}
+        \columnbreak
+        Equivale a:
+        \begin{minted}[fontsize=\footnotesize]{Python}
+obj.__new__(Clase)
+obj1.__lt__(obj2)
+obj1.__le__(obj2)
+obj1.__eq__(obj2)
+obj1.__ne__(obj2)
+obj1.__gt__(obj2)
+obj1.__ge__(obj2)
+obj.__hash__()
+obj.__str__()
+obj.__bool__()
+... # obj.__tipo__()
+obj.__getattribute__("attr")
+obj.__setattr__("attr", x)
+obj.__len__
+obj.__getitem__(x)
+obj.__setitem__(x, y)
+obj.__call__(x)
+obj.__contains__(x)
+        \end{minted}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Mapa básico de operadores (II)}
+    \begin{multicols}{2}
+    \hspace{47pt} El operador:
+        \begin{minted}[fontsize=\footnotesize]{Python}
+            obj1 + obj2
+            obj1 - obj2
+            obj1 * obj2
+            obj1 @ obj2
+            obj1 / obj2
+            obj1 // obj2
+            obj1 % obj2
+            obj1**obj2 #pow(obj1, obj2)
+            obj1 << obj2
+            obj1 >> obj2
+            obj1 & obj2
+            obj1 ^ obj2
+            obj1 | obj2
+            obj1 += obj2
+            ... # op=
+            -obj
+            +obj
+            abs(obj)
+            ~obj
+        \end{minted}
+        \columnbreak
+    Equivale a:
+        \begin{minted}[fontsize=\footnotesize]{Python}
+obj1.__add__(obj2)
+obj1.__sub__(obj2)
+obj1.__mul__(obj2)
+obj1.__matmul__(obj2)
+obj1.__truediv__(obj2)
+obj1.__floordiv__(obj2)
+obj1.__mod__(obj2)
+obj1.__pow__(obj2)
+obj1.__lshift__(obj2)
+obj1.__rshift__(obj2)
+obj1.__and__(obj2)
+obj1.__xor__(obj2)
+obj1.__or__(obj2)
+obj1.__iadd__(obj2)
+... # obj.__iop__
+obj.__neg__()
+obj.__pos__()
+obj.__abs__()
+obj.__invert__()
+        \end{minted}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Aplicando lo aprendido}
+    \begin{itemize}
+        \item Se enlaza un fichero del \textit{Advent of Code} de 2019: \href{https://github.com/0xb01u/AoC-2019/blob/master/Day\_14/example.txt}{\underline{Ejemplo de input del día 14}}.
+        \item El fichero representa reacciones entre elementos para producir otro elemento:
+        \begin{itemize}
+            \item[--] ``Por ejemplo, la reacción \texttt{1 A, 2 B, 3 C => 2 D} significa que exactamente 2 unidades del elemento \texttt{D} pueden producirse consumiendo exactamente 1 \texttt{A}, 2 \texttt{B} y 3 \texttt{C}.''
+            \item Cada reacción \textbf{produce un único tipo de elemento}.
+        \end{itemize}
+        \item \textbf{Construir un diccionario con el que poder consultar las reacciones indicadas por el fichero.}
+        \begin{itemize}
+            \item[--] Los elementos producidos podrían ser las claves, y los reactivos los valores.
+            \item[--] Por ejemplo:
+        \end{itemize}
+        \begin{minted}{Python}
+        {(2, "D"): [(1, "A"), (2, "B"), (3, "C")]}
+        \end{minted}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Mi solución}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+reactions = {(int(e.split(" ")[0]), e.split(" ")[1]):
+    list(zip((int(n) for n in s.split(" ")[0::2]), s.split(" ")[1::2]))
+    for s, e in map(lambda x: tuple(x[:-1].replace(", ", " ").split(" => ")),
+    open("transformations.txt").readlines())}
+    \end{minted}
+    Todo esto es \textbf{una única línea} (237 caracteres).
+\end{frame}
+
+\section{Computación científica en Python}
+\subsection{Introducción a NumPy}
+\begin{frame}[fragile]{NumPy}
+    \begin{itemize}
+        \item \href{https://numpy.org/}{\underline{NumPy}} es un módulo de \py\, de código libre, cuyo propósito es facilitar la \textbf{computación numérica} en \py.
+        \item Incluye \textbf{funciones} de gran utilidad para ámbitos relacionados con el \textbf{álgebra lineal} (vectores, matrices, etc.).
+        \item Usada en múltiples campos de la \textbf{computación científica}:
+        \begin{itemize}
+            \item[--] Machine learning.
+            \item[--] Computación cuántica.
+            \item[--] Computación estadística.
+            \item[--] Procesamiento de señales.
+        \end{itemize}
+        \item En su \textbf{página web} ofrecen decoumentación y tutoriales para aprender a utilizar el módulo de forma fácil.
+    \end{itemize}
+    \vspace{10pt}
+    \begin{minted}{Python}
+                      import numpy as np
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Arrays de NumPy}
+    La \textbf{estructura principal} de NumPy es el \texttt{ndarray} (\textit{n-dimensional array}), normalmente referido como array.
+    \begin{itemize}
+        \item Al contrario que las listas, \textbf{solo puede almacenar un único tipo de elementos} (normalmente números).
+        \item Los arrays de NumPy son más rápidos y utilizan menos memoria que las listas de \py. La \textbf{optimización} es una prioridad principal.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Inicialización de arrays de NumPy}
+    \begin{minted}{Python}
+        # Casteando iterables:
+        a = np.array([1, 2, 3], dtype=float)
+        print(a)    # [1. 2. 3.]
+        
+        # Otros inicializadores:
+        np.zeros(3)         # [0. 0. 0.]
+        np.ones(3)          # [1. 1. 1.]
+        np.empty(3)         # Valores aleatorios. ¡Rellenar!
+        np.arange(4)        # [0 1 2 3]
+        np.arange(2, 10, 2) # [2 4 6 8]
+        
+        np.eye(2)   # "eye" representa "I": la matriz identidad
+                    # [[1 0]
+                    #  [0 1]]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Atributos de los arrays}
+    \begin{itemize}
+        \item Número de \textbf{ejes} (dimensiones).
+    \end{itemize}
+    \begin{minted}{Python}
+        ndarray.ndim
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Dimensiones} del array, como tupla (tamaño del array en cada dimensión).
+    \end{itemize}
+    \begin{minted}{Python}
+        ndarray.shape
+    \end{minted}
+    \begin{itemize}
+        \item Número total de \textbf{elementos}
+    \end{itemize}
+    \begin{minted}{Python}
+        ndarray.size
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Tipo} de los elementos del array (encapsulado en un objeto).
+    \end{itemize}
+    \begin{minted}{Python}
+        ndarray.dtype
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con arrays}
+    \begin{itemize}
+        \item \textbf{Redimensionar} un array:
+    \end{itemize}
+    \begin{minted}{Python}
+        np.arange(6).reshape(2, 3)
+        #np.arange(6).reshape((2, 3)) # ¡Funciona igual!
+        # [[0 1 2]
+        #  [3 4 5]]
+    \end{minted}
+    \begin{itemize}
+        \item \textbf{Acceder} a elementos de un array (por índices o slices):
+    \end{itemize}
+    \begin{minted}{Python}
+        a = np.arange(16)
+        
+        a[3]    # 3
+        a[(a > 10)]  # [11 12 13 14 15]
+        a.reshape((4, 4))[2, 2] # 10
+        a.reshape((4, 4))[1::2, :]  # [[ 4  5  6  7]
+                                    #  [12 13 14 15]]
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones matemáticas con arrays}
+\begin{itemize}
+    \item Las operaciones básicas realizadas sobre arrays, se realizan sobre \textbf{todos los elementos} del array.
+\end{itemize}
+\begin{minted}{Python}
+    a = np.range(5) # [0 1 2 3 4]
+    
+    a + 5   # [5 6 7 8 9]
+    a // 2  # [0 0 1 1 2]
+    a**2    # [0 1 4 9 16]
+\end{minted}
+\begin{itemize}
+    \item Si \textbf{los dos operandos son arrays}, se suman los elementos correspondientemente (deben tener la misma forma):
+\end{itemize}
+\begin{minted}{Python}
+    a - np.arange(5, 0, -1) # [-5 -3 -1 1 3]
+\end{minted}
+\begin{itemize}
+    \item También, se define la multiplicación de matrices entre arrays:
+\end{itemize}
+\begin{minted}{Python}
+    a @ np.arange(5, 10)    # 80
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Otras funciones de utilidad}
+    \begin{minted}{Python}
+        a = np.arange(16).reshape(4, 4)
+        
+        a.min()     # 0
+        a.max()     # 15
+        a.sum()     # 120
+        a.cumsum()  # Suma acumulada para cada elemento:
+                    # [0 1 3 6 10 15 21 ...]
+        
+        a.min(axis=0)   # [0 1 2 3]
+        a.max(axis=1)   # [3 7 11 15]
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Matrices de NumPy}
+Las \texttt{matrix} de NumPy heredan de \texttt{ndarray}, por lo que tienen los mismos atributos y métodos. Sin embargo, existen 6 diferencias fundamentales con los arrays:
+    \begin{itemize}
+        \item Pueden \textbf{crearse a partir de strings}, siguiendo una sintaxis similar a la de Matlab.
+        \item Siempre son \textbf{dos-dimensionales}.
+        \item La multiplicación por defecto (\texttt{*}) es \textbf{multiplicación matricial}.
+        \item La potenciación de matrices equivale a \textbf{elevar la matriz a la potencia} especificada (en vez de cada uno de sus elementos).
+        \item La \textbf{``prioridad'' de las matrices es más alta} que la de los arrays, por lo que las operaciones entre arrays y matrices devuelven matrices.
+        \item Las matrices tienen algunos \textbf{atributos añadidos}:
+        \begin{itemize}
+            \item[--] \texttt{matrix.T} es la matrix transpuesta.
+            \item[--] \texttt{matrix.H} es la matriz compuesta conjugada (compleja)
+            \item[--] \texttt{matrix.I} es la inversa de la matriz (de ser inversible)
+            \item[--] \texttt{matrix.A} es la matriz como \texttt{ndarray}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Matrices de NumPy (II)}
+    NumPy \textbf{NO} recomienda utilizar la clase \texttt{matrix}, ya que dificulta la creación y consistencia de funciones que admitan arrays y matrices. Actualmente, se usan principalmente para interactuar con el módulo \texttt{scipy.sparse}, y se espera poder eliminar la clase \texttt{matrix} en algún momento del futuro.
+\end{frame}
+
+\begin{frame}[fragile]{Diferencias entre arrays y matrices}
+    \begin{minted}{Python}
+                a = np.arange(1, 5).reshape(2, 2)
+                m = np.matrix(a)
+    \end{minted}
+    \vspace{10pt}
+    \begin{multicols}{2}
+    \begin{minted}{Python}
+    print(a)        # [[1 2]
+                    #  [3 4]]
+
+    a * np.eye(2)   # [[1. 0.]
+                    #  [0. 4.]]
+
+    a**2            # [[1  4]
+                    #  [9 16]]
+    \end{minted}
+    \columnbreak
+    \begin{minted}{Python}
+  print(m)        # [[1 2]
+                  #  [3 4]]
+  
+  m * np.eye(2)   # [[1. 2.]
+                  #  [3. 4.]]
+  
+  m**2            # [[ 7, 10]
+                  #  [15, 22]]
+    \end{minted}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{Más cosas sobre NumPy}
+    \begin{itemize}
+        \item Lo que se ha tratado de NumPy es una parte \textbf{mínima} de lo que el módulo ofrece.
+        \begin{itemize}
+            \item[--] Puede que sea suficiente para la carrera, pero si se desea explotar todo el potencial que el módulo ofrece, ya sea por necesidad profesional o por curiosidad personal, todavía habría que tratar muchas funcionalidades.
+        \end{itemize}
+        \item Por ejemplo, la parte del módulo encargada de las operaciones de álgebra lineal (\texttt{numpy.linalg}) incluye algoritmos para \textbf{resolver ecuaciones} representadas en forma matricial o tensorial.
+        \item Se recomienda encarecidamente consultar la \textbf{página oficial} de NumPy para conocer qué más cosas se pueden hacer con el módulo:
+        \begin{itemize}
+            \item \textbf{Documentación}: \underline{\url{https://numpy.org/doc/stable/}}
+            \item \textbf{Tutoriales}: \underline{\url{https://numpy.org/learn/}}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Introducción a pandas}
+\begin{frame}[fragile]{pandas}
+    \begin{itemize}
+        \item \href{https://pandas.pydata.org/}{\underline{pandas}} es un módulo de \py\, de código libre, que proporciona utilidades para el \textbf{análisis de datos}.
+        \item Centrado en el trabajo con \textbf{datos tabulados}.
+        \item Trabaja sobre \textbf{NumPy}.
+        \item En su \textbf{página web} ofrecen documentación y tutoriales para aprender a utilizar el módulo de forma fácil.
+    \end{itemize}
+    \vspace{10pt}
+    \begin{minted}{Python}
+                    import pandas as pd
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{DataFrames de pandas}
+     \begin{itemize}
+         \item La estructura principal con la que se trabaja en pandas es el \texttt{DataFrame}.
+        \begin{itemize}
+            \item[--] También se utilizan las \texttt{Series}, pero son menos importantes.
+        \end{itemize}
+        \item Un DataFrame es una estructura de datos etiquetados bidimensional, con \textbf{columnas} de tipos potencialmente diferentes.
+        \begin{itemize}
+            \item[--] Un DataFrame se puede entender como un diccionario de Series.
+        \end{itemize}
+     \end{itemize}
+     \vspace{10pt}
+     \begin{minted}{Python}
+        df = pd.DataFrame(np.arange(16).reshape(4, 4)**2,
+            index=list("abcd"), columns=list("ABCD"))
+        #         a   b   c   d
+        #   A     0   1   4   9
+        #   B    16  25  36  49
+        #   C    64  81 100 121
+        #   D   144 169 196 225
+     \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con DataFrames: columnas}
+    \begin{minted}[fontsize=\scriptsize]{Python}
+                df = pd.DataFrame(np.arange(16).reshape(4, 4)**2,
+                    index=list("abcd"), columns=list("ABCD"))
+    \end{minted}
+    \begin{multicols}{2}
+        \begin{itemize}
+            \item \textbf{Selecciones} por columnas:
+            \begin{itemize}
+                \item[--] El resultado es una Series
+            \end{itemize}
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df["a"]
+        # A      0
+        # B     16
+        # C     64
+        # D    144
+        # Name: a, dtype: int32
+        \end{minted}
+        \begin{itemize}
+            \item \textbf{Añadir} columna al final:
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df["sqr"] = df["a"]**2
+        #      a    b    c    d    sqr
+        # A    0    1    4    9      0
+        # B   16   25   36   49    256
+        # C   64   81  100  121   4096
+        # D  144  169  196  225  20736
+        \end{minted}
+    \columnbreak
+        \begin{itemize}
+            \item \textbf{Añadir} columna al en una posición dada:
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df.insert(0, 3.1416, df["d"] > 50)
+        #    3.1416    a    b    c    d
+        # A   False    0    1    4    9
+        # B   False   16   25   36   49
+        # C    True   64   81  100  121
+        # D    True  144  169  196  225
+        \end{minted}
+        \begin{itemize}
+            \item \textbf{Eliminar} columna:
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        del df[3.1416]
+        \end{minted}
+        \begin{itemize}
+            \item Acceso a un \textbf{elemento}:
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df["a"][2]  # 64
+        \end{minted}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con DataFrames: filas}
+    \begin{minted}[fontsize=\scriptsize]{Python}
+                df = pd.DataFrame(np.arange(16).reshape(4, 4)**2,
+                    index=list("abcd"), columns=list("ABCD"))
+    \end{minted}
+    \begin{multicols}{2}
+        \begin{itemize}
+            \item \textbf{Selecciones} por filas:
+            \begin{itemize}
+                \item[--] El resultado es una Series
+            \end{itemize}
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df.loc["A"]
+        # a    0
+        # b    1
+        # c    4
+        # d    9
+        # Name: A, dtype: int32
+        \end{minted}
+        
+        \begin{itemize}
+            \item \textbf{Selecciones} de varias filas:
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df[1:3]
+        #     a    b    c    d
+        # B  16   25   36   49
+        # C  64   81  100  121
+        \end{minted}
+    \columnbreak
+        \begin{itemize}
+            \item \textbf{Selecciones} por índice de fila:
+        \end{itemize}
+        \begin{minted}[fontsize=\scriptsize]{Python}
+        df.iloc[0]
+        # a    0
+        # b    1
+        # c    4
+        # d    9
+        # Name: A, dtype: int32
+        \end{minted}
+        
+        \begin{itemize}
+            \item Operaciones de \textbf{añadir} fila y acceder a \textbf{elementos} análogas a las de columnas.
+        \end{itemize}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones con DataFrames}
+    \begin{itemize}
+        \item Las \textbf{operaciones aritméticas entre DataFrames} aplican la operación a los elementos de los DataFrames en la misma localización.
+        \begin{itemize}
+            \item[--] En este caso, el resultado tendrá el tamaño del DataFrame más grande, aunque los resultados en los elementos no comunes pueden ser indefinidos.
+        \end{itemize}
+    \end{itemize}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+        pd.DataFrame(np.arange(4).reshape(2, 2))
+            - pd.DataFrame(np.arange(9).reshape(3, 3))
+        #      0    1   2
+        # 0  0.0  0.0 NaN
+        # 1 -1.0 -1.0 NaN
+        # 2  NaN  NaN NaN
+        \end{minted}
+    \begin{itemize}
+        \item Las \textbf{operaciones aritméticas con escalares} aplican la misma operación a todos los elementos del DataFrame, como es de esperar:
+    \end{itemize}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+        pd.DataFrame(np.arange(4).reshape(2, 2)) * 3
+        #    0  1
+        # 0  0  3
+        # 1  6  9
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Operaciones útiles con DataFrames}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+            df = pd.DataFrame(np.arange(16).reshape(4, 4)**2,
+                columns=list("abcd"), index=list("ABCD"))
+    \end{minted}
+    \begin{multicols}{2}
+    \begin{itemize}
+        \item \textbf{Elemento} en una posición:
+    \end{itemize}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+        df.at["B", "b"] # 25
+    \end{minted}
+    
+    \columnbreak
+    
+    \begin{itemize}
+        \item \textbf{Elemento} en un \textbf{índice}:
+    \end{itemize}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+        df.iat[1, 1] # 25
+    \end{minted}
+    \end{multicols}
+    \begin{itemize}
+        \item \textbf{Media}:
+    \end{itemize}
+    \begin{multicols}{2}
+    \begin{minted}[fontsize=\footnotesize]{Python}
+        df.mean()
+        # a     56.0
+        # b     69.0
+        # c     84.0
+        # d    101.0
+        # dtype: float64
+    \end{minted}
+    
+    \columnbreak
+    
+    \begin{minted}[fontsize=\footnotesize]{Python}
+        df.mean(axis=1) # 0 = columnas
+                        # 1 = filas
+        # A      3.5
+        # B     31.5
+        # C     91.5
+        # D    183.5
+        # dtype: float64
+    \end{minted}
+    \end{multicols}
+    
+    \begin{itemize}
+        \item Operaciones similares a la media:
+        \begin{itemize}
+            \item[--] \textbf{Varianza}: \texttt{df.var()}
+            \item[--] \textbf{Desviación estándar}: \texttt{df.std()}
+            \item[--] \textbf{Suma}: \texttt{df.sum()}
+            \item[--] ...
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Más cosas sobre pandas}
+    \begin{itemize}
+        \item Al igual que con NumPy, aquí solo se ha hecho una \textbf{brevísima introducción} a todo lo que ofrece pandas.
+        \item Se recomienda encarecidamente consultar la \textbf{página oficial} de pandas para conocer qué más cosas se pueden hacer con el módulo:
+        \begin{itemize}
+            \item[--] \textbf{Documentación}: \underline{\url{https://pandas.pydata.org/docs/reference/index.html}}
+            \item[--] \textbf{Tutoriales}: \underline{\url{https://pandas.pydata.org/docs/getting\_started/index.html}}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{Finalización}
+
+\begin{frame}[fragile]{Gracias por vuestra atención}
+    \begin{itemize}
+        \item Esperamos que el taller os haya resultado útil, y que no se os haya hecho demasiado pesado.
+        \begin{itemize}
+            \item[--] Ha sido un taller bastante completo, así que es normal necesitar un tiempo para asimilar todos los conceptos.
+        \end{itemize}
+        \item \textbf{Repositorio} con el código del taller: \underline{\url{https://github.com/0xb01u/TallerPy\_HoC2020}}
+        \item Si os habéis quedado con \textbf{dudas}, o necesitáis cualquier tipo de \textbf{ayuda}, contactadnos en \textbf{Telegram}:
+        \begin{itemize}
+            \item[--] @bomilk
+            \item[--] @jcgd2415
+        \end{itemize}
+        \item[]
+        \item Y ahora, \textbf{¡a programar!}
+    \end{itemize}
+    \begin{minted}{Python}
+                            exit()
+    \end{minted}
+\end{frame}
+
+\end{document}
